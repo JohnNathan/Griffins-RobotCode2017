@@ -4,17 +4,10 @@ import jaci.pathfinder.Trajectory;
 
 public class EncoderFollower {
 	
+	@SuppressWarnings("unused")
 	private double kp, ki, kd, kv, ka;
 	private Trajectory traj;
 	private double initialPosition;
-	
-	{
-		kp = 0.0;
-		ki = 0.0;
-		kd = 0.0;
-		kv = 0.0;
-		ka = 0.0;
-	}
 	
 	public EncoderFollower(Trajectory traj) {
 		this.traj = traj.copy();
@@ -46,12 +39,15 @@ public class EncoderFollower {
 			Trajectory.Segment seg = traj.get(currentSegment);
 			double err = seg.position - distance;
 			double value = kp * err
-					+ ki * (err + err_last) * seg.dt
+//					+ ki * (err + err_last) * seg.dt
 					+ kd * (err - err_last) / seg.dt
 					+ kv * seg.velocity
 					+ ka * seg.acceleration;
 			err_last = err;
 			++currentSegment;
+			
+			//debug statement
+			System.out.println(err);
 			
 			return value;
 		}

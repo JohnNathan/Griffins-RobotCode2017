@@ -24,7 +24,7 @@ public class GearManLift extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return true;
+        return Robot.InstanceMap.gearMan.finishedLinkage();
     }
 
     // Called once after isFinished returns true

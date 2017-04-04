@@ -23,6 +23,9 @@ public class DriveCommand extends Command {
     	
     	Robot.InstanceMap.driveTrain.update_pistons();
     	
+    	Robot.InstanceMap.driveTrain.updateSmartDashboard();
+    	Robot.InstanceMap.gearMan.updateSmartDashboard();
+    	
     	XBoxController driverController = Robot.oi.getDriverController();
     	double[] xy_vals = normalize(driverController.r_x_scaled(), driverController.l_y_scaled());
     	driverController = null;
