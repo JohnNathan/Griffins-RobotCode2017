@@ -20,9 +20,9 @@ public class CurrentManagerCommand extends Command {
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
     	if (Robot.InstanceMap.ampman.isVoltageTooLow()) {
-    		Robot.instance.stopCompressor();
+    		Robot.InstanceMap.ampman.stopCompressor();
     	} else if (Robot.InstanceMap.ampman.isVoltageHighEnough()) {
-    		Robot.instance.startCompressor();
+    		Robot.InstanceMap.ampman.startCompressor();
     	}
     }
 

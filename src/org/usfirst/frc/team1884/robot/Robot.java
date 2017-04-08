@@ -13,15 +13,19 @@ import org.usfirst.frc.team1884.robot.commands.AutoTestCommand;
 import org.usfirst.frc.team1884.robot.commands.DriveShiftHighSpeed;
 import org.usfirst.frc.team1884.robot.commands.AutoGearBlueRetzone;
 import org.usfirst.frc.team1884.robot.commands.autonomous.DoNothing;
+import org.usfirst.frc.team1884.robot.commands.autonomous.RecordedBlueBoiler;
+import org.usfirst.frc.team1884.robot.commands.autonomous.RecordedBlueRetzone;
+import org.usfirst.frc.team1884.robot.commands.autonomous.RecordedRedBoiler;
+import org.usfirst.frc.team1884.robot.commands.autonomous.RecordedRedRetzone;
 import org.usfirst.frc.team1884.robot.subsystems.Climber;
 import org.usfirst.frc.team1884.robot.subsystems.CurrentManager;
 import org.usfirst.frc.team1884.robot.subsystems.DriveTrain;
 import org.usfirst.frc.team1884.robot.subsystems.GearIntake;
 import org.usfirst.frc.team1884.robot.subsystems.GearManipulator;
 import org.usfirst.frc.team1884.robot.subsystems.Shooter;
+import org.usfirst.frc.team1884.robot.subsystems.SystemRecorder;
 
 import edu.wpi.first.wpilibj.CameraServer;
-import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -37,8 +41,6 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-	public static Robot instance = null;
 	
 	public static class Map {
 		//Constants go here
@@ -83,6 +85,13 @@ public class Robot extends IterativeRobot {
 		
 		//PDP
 		//idk man just use the CAN functionality
+		
+		//Auto paths
+		public final static String
+			REC_BLUE_BOILER_PATH = "/home/lvuser/blue_boiler.csv",
+			REC_BLUE_RETZONE_PATH = "/home/lvuser/blue_retzone.csv",
+			REC_RED_BOILER_PATH = "/home/lvuser/red_boiler.csv",
+			REC_RED_RETZONE_PATH = "/home/lvuser/red_retzone.csv";
 	}
 	
 	static {
@@ -105,16 +114,21 @@ public class Robot extends IterativeRobot {
 	
 	public static OI oi;
 
-	public Compressor compressor;
 	private SendableChooser<Command> autoChooser;
 	public final static HashMap<String, Command> autos;
 	static {
 		autos = new HashMap<String, Command>();
 		autos.put("Gear Middle", new AutoGearMiddle());
-		autos.put("Blue Boiler", new AutoGearBlueBoiler());
-		autos.put("Blue Retrieval Zone", new AutoGearBlueRetzone());
-		autos.put("Red Boiler", new AutoGearRedBoiler());
-		autos.put("Red Retrieval Zone", new AutoGearRedRetzone());
+//		autos.put("Blue Boiler", new AutoGearBlueBoiler());
+//		autos.put("Blue Retrieval Zone", new AutoGearBlueRetzone());
+//		autos.put("Red Boiler", new AutoGearRedBoiler());
+//		autos.put("Red Retrieval Zone", new AutoGearRedRetzone());
+		
+		autos.put("Blue Boiler", new RecordedBlueBoiler());
+		autos.put("Blue Retrieval Zone", new RecordedBlueRetzone());
+		autos.put("Red Boiler", new RecordedRedBoiler());
+		autos.put("Red Retrieval Zone", new RecordedRedRetzone());
+		
 		autos.put("Base Line", new AutoBaseLine());
 		autos.put("Cross Field", new AutoCrossField());
 		autos.put("Test Auto", new AutoTestCommand());
@@ -124,10 +138,7 @@ public class Robot extends IterativeRobot {
 	public void robotInit() {
 		oi = new OI();
 		
-		compressor = new Compressor();
 		CameraServer.getInstance().startAutomaticCapture();
-		
-		instance = this;
 		
 		autoChooser = new SendableChooser<Command>();
 		for (java.util.Map.Entry<String, Command> entry : autos.entrySet()) {
@@ -139,7 +150,6 @@ public class Robot extends IterativeRobot {
 
 	@Override
 	public void disabledInit() {
-		compressor.stop();
 	}
 
 	@Override
@@ -151,7 +161,7 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void autonomousInit() {
 		new DriveShiftHighSpeed().start();
-		compressor.stop();
+		InstanceMap.ampman.stopCompressor();
 		
 		autoCommand = autoChooser.getSelected();
 		if (autoCommand != null) autoCommand.start();
@@ -165,24 +175,35 @@ public class Robot extends IterativeRobot {
 	@Override
 	public void teleopInit() {
 		if (autoCommand != null) autoCommand.cancel();
-		compressor.start();
+		InstanceMap.ampman.stopCompressor();
 	}
 
 	@Override
 	public void teleopPeriodic() {
 		Scheduler.getInstance().run();
+		
+		boolean rec_b = oi.getRecordingButton();
+		if (rec_b_prev != rec_b && rec_b) {
+			recording = true;
+			InstanceMap.driveTrain.resetEncoders();
+		} else if (rec_b_prev != rec_b && !rec_b) {
+			recording = false;
+			sr.writeData();
+		}
+		rec_b_prev = rec_b;
+		
+		if (recording) {
+			sr.collectData();
+		}
 	}
+	public final static SystemRecorder sr =
+			new SystemRecorder(InstanceMap.driveTrain, InstanceMap.gearMan, InstanceMap.intake);
+	private boolean recording = false;
+	private boolean rec_b_prev = false;
+	
 
 	@Override
 	public void testPeriodic() {
 		LiveWindow.run();
-	}
-	
-	public void startCompressor() {
-		compressor.start();
-	}
-	
-	public void stopCompressor() {
-		compressor.stop();
 	}
 }

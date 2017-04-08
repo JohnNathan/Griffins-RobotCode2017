@@ -10,7 +10,6 @@ import org.usfirst.frc.team1884.robot.commands.IntakeRollOut;
 import org.usfirst.frc.team1884.robot.commands.IntakeUp;
 import org.usfirst.frc.team1884.robot.commands.PutGearInDownPosition;
 import org.usfirst.frc.team1884.robot.commands.PutGearInUpPosition;
-import org.usfirst.frc.team1884.robot.commands.autonomous.DriveToLeftPeg;
 import org.usfirst.frc.team1884.util.input.XBoxController;
 
 import edu.wpi.first.wpilibj.buttons.Trigger;
@@ -63,8 +62,6 @@ public class OI {
 		driverController.rt_b.whenActive(new DriveShiftLowSpeed());
 		driverController.lt_b.whenActive(new DriveShiftHighSpeed());
 		
-//		operatorController.rb.whileHeld(new ShooterShootCommand());
-//		operatorController.back.whileHeld(new ShooterFeedCommand());
 		operatorController.a.whenPressed(new PutGearInUpPosition());
 		operatorController.b.whenPressed(new PutGearInDownPosition());
 		operatorController.lb.whileHeld(new IntakeRollIn());

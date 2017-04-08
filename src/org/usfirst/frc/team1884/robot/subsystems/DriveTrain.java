@@ -102,20 +102,34 @@ public class DriveTrain extends Subsystem implements Debuggable, Recordable {
     }
 
     // leftSpeed, rightSpeed, leftDistance, rightDistance
+    private long prev_timestamp = 0L;
     @Override
     public double[] getData() {
-    	return new double[]{left1.get(), right1.get(), this.getLeftDistance(), this.getRightDistance()};
+    	double dt = (-prev_timestamp + (prev_timestamp=System.currentTimeMillis()))/1000.0; //calculate and reassign
+    	return new double[] { dt, left1.get(), right1.get(), this.getLeftDistance(), this.getRightDistance() };
     }
     
     private RecordingFollower rf;
     {
     	rf = new RecordingFollower(this);
+    	rf.setPIDVA(0.01, 0.0, 0.001);
     }
     // dt, leftSpeed, rightSpeed, leftPosition, rightPosition
     @Override
     public void putData(double[] data) {
     	if (data.length != 5) return;
     	rf.drive(data[0], data[1], data[2], data[3], data[4]);
+    }
+    
+    @Override
+    public void startFollowRecording() {
+    	this.rf.setStartPoint();
+    	this.rf.reset();
+    }
+    
+    @Override
+    public int getLength() {
+    	return 5;
     }
     
 }

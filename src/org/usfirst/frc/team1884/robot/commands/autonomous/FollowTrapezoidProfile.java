@@ -15,9 +15,9 @@ public class FollowTrapezoidProfile extends Command {
 	public final static FollowTrapezoidProfile instance = new FollowTrapezoidProfile();
 	
 	public final static double
-		kp = 0.13,
+		kp = 0.01,
 		ki = 0.0,
-		kd = 0.02,
+		kd = 0.001,
 		kv = 1.0 / DriveTrain.max_velocity,
 		ka = 0.001;
 	

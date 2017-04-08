@@ -32,7 +32,7 @@ public class GearIntake extends Subsystem implements Debuggable, Recordable {
 		liftMotor.set(botLimit.get() || Robot.InstanceMap.gearMan.isUp() ? 0.0 : -0.1);
 	}
 	public void downHarder() {
-		liftMotor.set(botLimit.get() ? 0.0 : -0.4);
+		liftMotor.set(botLimit.get() || Robot.InstanceMap.gearMan.isUp() ? 0.0 : -0.4);
 	}
 	public void hold() {
 		liftMotor.set(.10);
@@ -63,11 +63,11 @@ public class GearIntake extends Subsystem implements Debuggable, Recordable {
     	SmartDashboard.putBoolean("IN Top Switch", this.isAtTop());
     	SmartDashboard.putBoolean("IN Bot Switch", this.isAtBot());
     }
-    // arm direction(-1=down,0=hold,1=up), intake(1=in,-1=out)
+    // arm direction(-1=down,0=hold,1=up), intake(1=in,-1=out,0=stop)
     @Override
     public double[] getData() {
-    	return new double[]{liftMotor.get() > 0.0 ? 1.0 : liftMotor.get() < 0.0 ? -1.0 : 0.0,
-    			rollerMotor.get() > 0.0 ? 1 : rollerMotor.get() < 0 ? -1.0 : 0.0};
+    	return new double[]{ liftMotor.get() > 0.0 ? 1.0 : liftMotor.get() < 0.0 ? -1.0 : 0.0,
+    			rollerMotor.get() > 0.0 ? 1 : rollerMotor.get() < 0 ? -1.0 : 0.0 };
     }
     // arm direction(-1=down,0=hold,1=up), intake(1=in,-1=out)
     @Override
@@ -81,5 +81,14 @@ public class GearIntake extends Subsystem implements Debuggable, Recordable {
     	if (intake > 0) this.intake();
     	else if (intake < 0) this.outtake();
     	else this.rollerOff();
+    }
+    
+    @Override
+    public void startFollowRecording() {
+    }
+    
+    @Override
+    public int getLength() {
+    	return this.getData().length;
     }
 }

@@ -2,6 +2,7 @@ package org.usfirst.frc.team1884.robot.subsystems;
 
 import org.usfirst.frc.team1884.robot.commands.CurrentManagerCommand;
 
+import edu.wpi.first.wpilibj.Compressor;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
@@ -11,9 +12,11 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 public class CurrentManager extends Subsystem {
 
     private PowerDistributionPanel pdp;
+    private Compressor compressor;
     
     public CurrentManager() {
     	pdp = new PowerDistributionPanel();
+    	compressor = new Compressor();
     }
     
     public double getTotalCurrent() {
@@ -30,6 +33,14 @@ public class CurrentManager extends Subsystem {
     
     public boolean isVoltageHighEnough() {
     	return pdp.getVoltage() > 10.0;
+    }
+    
+    public void stopCompressor() {
+    	compressor.stop();
+    }
+    
+    public void startCompressor() {
+    	compressor.start();
     }
     
     public void initDefaultCommand() {

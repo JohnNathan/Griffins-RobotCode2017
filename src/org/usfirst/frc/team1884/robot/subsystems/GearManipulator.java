@@ -89,7 +89,7 @@ public class GearManipulator extends Subsystem implements Debuggable, Recordable
 	}
 	
 	// claw state (0=close,1=open), linkage state (0=down,1=up)
-	private double prevClawState = 0, prevLinkageState = 0;
+	private double prevClawState = 0.0, prevLinkageState = 0.0;
 	@Override
 	public void putData(double[] data) {
 		if (data.length != 2) return;
@@ -107,6 +107,15 @@ public class GearManipulator extends Subsystem implements Debuggable, Recordable
 
 		prevClawState = clawState;
 		prevLinkageState = linkageState;
+	}
+	
+	@Override
+	public void startFollowRecording() {
+	}
+	
+	@Override
+	public int getLength() {
+		return this.getData().length;
 	}
 }
 
