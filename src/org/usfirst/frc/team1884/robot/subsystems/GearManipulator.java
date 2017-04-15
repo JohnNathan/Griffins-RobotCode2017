@@ -4,7 +4,6 @@ import org.usfirst.frc.team1884.robot.Robot;
 import org.usfirst.frc.team1884.robot.commands.GearManDefault;
 import org.usfirst.frc.team1884.util.DoubleSolenoidWrapper;
 
-import edu.wpi.first.wpilibj.DigitalInput;
 import edu.wpi.first.wpilibj.DoubleSolenoid;
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -12,7 +11,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class GearManipulator extends Subsystem implements Debuggable, Recordable {
+public class GearManipulator extends Subsystem implements IDebuggable, IRecordable {
 
 	private DoubleSolenoidWrapper claw, linkage;
 	private final static long claw_timer = 250L, linkage_timer = 800L;
@@ -23,7 +22,7 @@ public class GearManipulator extends Subsystem implements Debuggable, Recordable
 			k_claw_open = DoubleSolenoid.Value.kForward,
 			k_off = DoubleSolenoid.Value.kOff;
 	
-	private DigitalInput gearSwitch;
+//	private DigitalInput gearSwitch;
 	
     public GearManipulator() {
     	claw = new DoubleSolenoidWrapper(Robot.Map.GM_CLAW_F, Robot.Map.GM_CLAW_R, claw_timer);
@@ -32,7 +31,7 @@ public class GearManipulator extends Subsystem implements Debuggable, Recordable
     	this.closeClaw();
     	this.lowerClaw();
     	
-    	gearSwitch = new DigitalInput(Robot.Map.GM_SWITCH);
+//    	gearSwitch = new DigitalInput(Robot.Map.GM_SWITCH);
     }
     
     public void liftClaw() {
@@ -60,7 +59,8 @@ public class GearManipulator extends Subsystem implements Debuggable, Recordable
     	claw.update();
     }
     public boolean isGearIn() {
-    	return gearSwitch.get();
+//    	return gearSwitch.get();
+    	return false;
     }
     public boolean isUp() {
     	return linkage.getActualState() == k_linkage_up;
@@ -81,14 +81,14 @@ public class GearManipulator extends Subsystem implements Debuggable, Recordable
 		SmartDashboard.putString("GM Claw State", claw.getActualState() == k_claw_closed ? "CLOSED" : "OPEN");
 	}
 	
-	// clawClosed(0=close,1=open), clawUp(1=up,0=down)
+	// clawClosed(-1=close,1=open), clawUp(1=up,-1=down)
 	@Override
 	public double[] getData() {
-		return new double[]{claw.getActualState() == k_claw_closed ? 1.0 : 0.0,
-				linkage.getActualState() == k_linkage_up ? 1.0 : 0.0};
+		return new double[]{claw.getActualState() == k_claw_closed ? -1.0 : 1.0,
+				linkage.getActualState() == k_linkage_up ? 1.0 : -1.0};
 	}
 	
-	// claw state (0=close,1=open), linkage state (0=down,1=up)
+	// claw state (-1=close,1=open), linkage state (-1=down,1=up)
 	private double prevClawState = 0.0, prevLinkageState = 0.0;
 	@Override
 	public void putData(double[] data) {
@@ -97,12 +97,12 @@ public class GearManipulator extends Subsystem implements Debuggable, Recordable
 		double linkageState = data[1];
 
 		if (clawState != prevClawState) {
-			if (clawState == 0.0) this.closeClaw();
-			else if (clawState == 1.0) this.openClaw();
+			if (clawState < 0.0) this.closeClaw();
+			else if (clawState > 0.0) this.openClaw();
 		}
 		if (linkageState != prevLinkageState) {
-			if (clawState == 0.0) this.lowerClaw();
-			else if (clawState == 1.0) this.liftClaw();
+			if (clawState < 0.0) this.lowerClaw();
+			else if (clawState > 0.0) this.liftClaw();
 		}
 
 		prevClawState = clawState;

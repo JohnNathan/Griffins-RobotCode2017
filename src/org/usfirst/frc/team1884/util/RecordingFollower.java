@@ -27,12 +27,10 @@ public class RecordingFollower {
 	}
 	
 	public void reset() {
-		currentSegment = 0;
 		err_last_l = 0;
 		err_last_r = 0;
 	}
 	
-	int currentSegment = 0;
 	double err_last_l = 0, err_last_r = 0;
 	public void drive(double dt, double leftF, double rightF, double leftPos, double rightPos) {
 		double distance_l = drivetrain.getLeftDistance() - initialPosition_l;
@@ -47,12 +45,12 @@ public class RecordingFollower {
 		double right_value = kp * err_r
 //				+ ki * (err + err_last) * dt
 				+ kd * (err_r - err_last_r) / dt
-				+ rightF;
+				- rightF;
 		err_last_l = err_l;
 		err_last_r = err_r;
 			
 		//debug statement
-		System.out.println(err_l + "\t" + err_r);
+//		System.out.println(err_l + "\t" + err_r);
 		
 		drivetrain.setLeftSpeed(left_value);
 		drivetrain.setRightSpeed(-right_value);

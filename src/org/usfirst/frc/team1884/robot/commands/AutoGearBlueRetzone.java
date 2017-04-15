@@ -4,7 +4,7 @@ import org.usfirst.frc.team1884.robot.commands.autonomous.TrapezoidBackup;
 import org.usfirst.frc.team1884.robot.commands.autonomous.TrapezoidForwardRetzonePeg;
 import org.usfirst.frc.team1884.robot.commands.autonomous.TrapezoidSideTurnLeft;
 import org.usfirst.frc.team1884.robot.commands.autonomous.TrapezoidToRetzonePeg;
-import org.usfirst.frc.team1884.robot.commands.autonomous.WaitOneSec;
+import org.usfirst.frc.team1884.robot.commands.autonomous.WaitCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -15,13 +15,13 @@ public class AutoGearBlueRetzone extends CommandGroup {
 
     public AutoGearBlueRetzone() {
     	addSequential(new PutGearInUpPosition());
-    	addSequential(new WaitOneSec());
+    	addSequential(new WaitCommand(.5));
     	addSequential(new TrapezoidForwardRetzonePeg()); //    	addSequential(new DriveToPeg());
     	addSequential(new TrapezoidSideTurnLeft());
     	addSequential(new TrapezoidToRetzonePeg());
-    	addSequential(new WaitOneSec());
+    	addSequential(new WaitCommand(.5));
     	addSequential(new GearManOpen());
-    	addSequential(new WaitOneSec());
+    	addSequential(new WaitCommand(.2));
     	addSequential(new TrapezoidBackup());
         // Add Commands here:
         // e.g. addSequential(new Command1());

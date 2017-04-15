@@ -4,7 +4,7 @@ import org.usfirst.frc.team1884.robot.commands.autonomous.TrapezoidBackup;
 import org.usfirst.frc.team1884.robot.commands.autonomous.TrapezoidForwardBoilerPeg;
 import org.usfirst.frc.team1884.robot.commands.autonomous.TrapezoidSideTurnRight;
 import org.usfirst.frc.team1884.robot.commands.autonomous.TrapezoidToBoilerPeg;
-import org.usfirst.frc.team1884.robot.commands.autonomous.WaitOneSec;
+import org.usfirst.frc.team1884.robot.commands.autonomous.WaitCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -15,13 +15,13 @@ public class AutoGearBlueBoiler extends CommandGroup {
 
     public AutoGearBlueBoiler() {
     	addSequential(new PutGearInUpPosition());
-    	addSequential(new WaitOneSec());
+    	addSequential(new WaitCommand(.5));
     	addSequential(new TrapezoidForwardBoilerPeg());
     	addSequential(new TrapezoidSideTurnRight());
     	addSequential(new TrapezoidToBoilerPeg());
-    	addSequential(new WaitOneSec());
+    	addSequential(new WaitCommand(.5));
     	addSequential(new GearManOpen());
-    	addSequential(new WaitOneSec());
+    	addSequential(new WaitCommand(.2));
     	addSequential(new TrapezoidBackup());
         // Add Commands here:
         // e.g. addSequential(new Command1());

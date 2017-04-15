@@ -5,12 +5,24 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class WaitOneSec extends Command {
+public class WaitCommand extends Command {
 
 	private long t;
+	private final long timeout;
 	
-    public WaitOneSec() {
+    public WaitCommand() {
     	t = Long.MAX_VALUE;
+    	timeout = 1000L;
+    }
+    
+    public WaitCommand(double timeoutInSeconds) {
+    	t = Long.MAX_VALUE;
+    	timeout = (long)(timeoutInSeconds*1000);
+    }
+    
+    public WaitCommand(long timeoutInMillis) {
+    	t = Long.MAX_VALUE;
+    	timeout = timeoutInMillis;
     }
 
     // Called just before this Command runs the first time
@@ -24,7 +36,7 @@ public class WaitOneSec extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return System.currentTimeMillis() - t > 1000;
+        return System.currentTimeMillis() - t > timeout;
     }
 
     // Called once after isFinished returns true

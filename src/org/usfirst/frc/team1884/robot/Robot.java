@@ -5,13 +5,9 @@ import java.util.HashMap;
 
 import org.usfirst.frc.team1884.robot.commands.AutoBaseLine;
 import org.usfirst.frc.team1884.robot.commands.AutoCrossField;
-import org.usfirst.frc.team1884.robot.commands.AutoGearBlueBoiler;
 import org.usfirst.frc.team1884.robot.commands.AutoGearMiddle;
-import org.usfirst.frc.team1884.robot.commands.AutoGearRedBoiler;
-import org.usfirst.frc.team1884.robot.commands.AutoGearRedRetzone;
 import org.usfirst.frc.team1884.robot.commands.AutoTestCommand;
 import org.usfirst.frc.team1884.robot.commands.DriveShiftHighSpeed;
-import org.usfirst.frc.team1884.robot.commands.AutoGearBlueRetzone;
 import org.usfirst.frc.team1884.robot.commands.autonomous.DoNothing;
 import org.usfirst.frc.team1884.robot.commands.autonomous.RecordedBlueBoiler;
 import org.usfirst.frc.team1884.robot.commands.autonomous.RecordedBlueRetzone;

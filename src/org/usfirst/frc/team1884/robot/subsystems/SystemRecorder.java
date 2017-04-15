@@ -13,15 +13,15 @@ public class SystemRecorder {
 	public final static String BASE_FILE_NAME = "auto";
 	
 	private class RecordableSystem {
-		private Recordable rec;
+		private IRecordable rec;
 		private int numDatas;
-		private RecordableSystem(Recordable rec) { this.rec = rec; numDatas = rec.getLength(); }
+		private RecordableSystem(IRecordable rec) { this.rec = rec; numDatas = rec.getLength(); }
 	}
 
 	private RecordableSystem[] list;
 	private LinkedList<double[]> data;
 
-	public SystemRecorder(Recordable...recordables) {
+	public SystemRecorder(IRecordable...recordables) {
 		RecordableSystem[] tmp = new RecordableSystem[recordables.length];
 		for (int i = 0; i < tmp.length; ++i) tmp[i] = new RecordableSystem(recordables[i]);
 		list = tmp;

@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class Climber extends Subsystem implements Debuggable {
+public class Climber extends Subsystem implements IDebuggable {
 	
 	private CANTalon motor1, motor2;
 	

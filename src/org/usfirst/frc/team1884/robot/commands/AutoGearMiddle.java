@@ -2,7 +2,7 @@ package org.usfirst.frc.team1884.robot.commands;
 
 import org.usfirst.frc.team1884.robot.commands.autonomous.TrapezoidBackup;
 import org.usfirst.frc.team1884.robot.commands.autonomous.TrapezoidMidPeg;
-import org.usfirst.frc.team1884.robot.commands.autonomous.WaitOneSec;
+import org.usfirst.frc.team1884.robot.commands.autonomous.WaitCommand;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
@@ -13,11 +13,11 @@ public class AutoGearMiddle extends CommandGroup {
 
     public AutoGearMiddle() {
     	addSequential(new PutGearInUpPosition());
-    	addSequential(new WaitOneSec());
+    	addSequential(new WaitCommand(.5));
     	addSequential(new TrapezoidMidPeg()); //    	addSequential(new DriveToPeg());
-    	addSequential(new WaitOneSec());
+    	addSequential(new WaitCommand(.5));
     	addSequential(new GearManOpen());
-    	addSequential(new WaitOneSec());
+    	addSequential(new WaitCommand(.2));
     	addSequential(new TrapezoidBackup());
         // Add Commands here:
         // e.g. addSequential(new Command1());

@@ -15,7 +15,7 @@ import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 import jaci.pathfinder.Trajectory;
 
-public class DriveTrain extends Subsystem implements Debuggable, Recordable {
+public class DriveTrain extends Subsystem implements IDebuggable, IRecordable {
 
 	private CANTalon left1, left2, right1, right2;
 	private DoubleSolenoidWrapper shifter;

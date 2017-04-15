@@ -12,7 +12,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 /**
  *
  */
-public class GearIntake extends Subsystem implements Debuggable, Recordable {
+public class GearIntake extends Subsystem implements IDebuggable, IRecordable {
 
 	private VictorSP rollerMotor, liftMotor;
 	private DigitalInput topLimit, botLimit;
@@ -66,10 +66,10 @@ public class GearIntake extends Subsystem implements Debuggable, Recordable {
     // arm direction(-1=down,0=hold,1=up), intake(1=in,-1=out,0=stop)
     @Override
     public double[] getData() {
-    	return new double[]{ liftMotor.get() > 0.0 ? 1.0 : liftMotor.get() < 0.0 ? -1.0 : 0.0,
+    	return new double[]{ liftMotor.get() > 0.15 ? 1.0 : liftMotor.get() < 0.0 ? -1.0 : 0.0,
     			rollerMotor.get() > 0.0 ? 1 : rollerMotor.get() < 0 ? -1.0 : 0.0 };
     }
-    // arm direction(-1=down,0=hold,1=up), intake(1=in,-1=out)
+    // arm direction(-1=down,0=hold,1=up), intake(1=in,-1=out,0=stop)
     @Override
     public void putData(double[] data) {
     	if (data.length != 2) return;
