@@ -84,10 +84,16 @@ public class Robot extends IterativeRobot {
 		
 		//Auto paths
 		public final static String
-			REC_BLUE_BOILER_PATH = "/home/lvuser/blue_boiler.csv",
-			REC_BLUE_RETZONE_PATH = "/home/lvuser/blue_retzone.csv",
-			REC_RED_BOILER_PATH = "/home/lvuser/red_boiler.csv",
-			REC_RED_RETZONE_PATH = "/home/lvuser/red_retzone.csv";
+			REC_BLUE_BOILER_AUTO = "/home/lvuser/blue_boiler.csv",
+			REC_BLUE_RETZONE_AUTO = "/home/lvuser/blue_retzone.csv",
+			REC_RED_BOILER_AUTO = "/home/lvuser/red_boiler.csv",
+			REC_RED_RETZONE_AUTO = "/home/lvuser/red_retzone.csv",
+			REC_CROSS_FIELD_LEFT = "/home/lvuser/cross_field_left.csv",
+			REC_CROSS_FIELD_RIGHT = "/home/lvuser/cross_field_right.csv",
+			REC_TRIGGER_HOPPER_BLUE_LEFT = "/home/lvuser/hopper_trigger_left_blue.csv",
+			REC_TRIGGER_HOPPER_BLUE_RIGHT = "/home/lvuser/hopper_trigger_right_blue.csv",
+			REC_TRIGGER_HOPPER_RED_LEFT = "/home/lvuser/hopper_trigger_left_red.csv",
+			REC_TRIGGER_HOPPER_RED_RIGHT = "/home/lvuser/hopper_trigger_right_red.csv";
 	}
 	
 	static {

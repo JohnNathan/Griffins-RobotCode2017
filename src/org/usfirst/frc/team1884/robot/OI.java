@@ -59,9 +59,18 @@ public class OI {
 				return Robot.InstanceMap.gearMan.isGearIn();
 			}
 		}.whenActive(new GearManClose());
+		//driver controls
 		driverController.rt_b.whenActive(new DriveShiftLowSpeed());
 		driverController.lt_b.whenActive(new DriveShiftHighSpeed());
 		
+		//master controls
+		driverController.rb.whileHeld(new IntakeRollIn());
+		driverController.a.whenPressed(new PutGearInUpPosition());
+		driverController.b.whenPressed(new PutGearInDownPosition());
+		driverController.x.whenPressed(new GearManOpen());
+		driverController.y.whenPressed(new GearManClose());
+		
+		//operator controls
 		operatorController.a.whenPressed(new PutGearInUpPosition());
 		operatorController.b.whenPressed(new PutGearInDownPosition());
 		operatorController.lb.whileHeld(new IntakeRollIn());

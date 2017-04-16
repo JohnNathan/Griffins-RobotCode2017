@@ -6,7 +6,7 @@ public class RecordedBlueBoiler extends FollowRecordedAuto {
 
 	@Override
     protected void initialize() {
-    	super.load(Robot.Map.REC_BLUE_BOILER_PATH);
+    	super.load(Robot.Map.REC_BLUE_BOILER_AUTO);
     	super.initialize();
     }
 }

@@ -6,7 +6,7 @@ public class RecordedRedRetzone extends FollowRecordedAuto {
 
 	@Override
     protected void initialize() {
-    	super.load(Robot.Map.REC_RED_RETZONE_PATH);
+    	super.load(Robot.Map.REC_RED_RETZONE_AUTO);
     	super.initialize();
     }
 }
