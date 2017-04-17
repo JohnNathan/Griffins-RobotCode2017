@@ -19,7 +19,7 @@ public class IntakeHoldCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-//    	Robot.InstanceMap.intake.hold();
+    	Robot.InstanceMap.intake.hold();
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -16,6 +16,7 @@ public class GearIntake extends Subsystem implements IDebuggable, IRecordable {
 
 	private VictorSP rollerMotor, liftMotor;
 	private DigitalInput topLimit, botLimit;
+	private boolean desiredState = false; //true for up, false for down
 	
 	public GearIntake() {
 		rollerMotor = new VictorSP(Robot.Map.IN_ROLLER);
@@ -27,15 +28,18 @@ public class GearIntake extends Subsystem implements IDebuggable, IRecordable {
 	
 	public void up() {
 		liftMotor.set(topLimit.get() ? 0.0 : 0.37);
+		desiredState = true;
 	}
 	public void down() {
 		liftMotor.set(botLimit.get() || Robot.InstanceMap.gearMan.isUp() ? 0.0 : -0.1);
+		desiredState = false;
 	}
 	public void downHarder() {
 		liftMotor.set(botLimit.get() || Robot.InstanceMap.gearMan.isUp() ? 0.0 : -0.4);
+		desiredState = false;
 	}
 	public void hold() {
-		liftMotor.set(.10);
+		liftMotor.set(desiredState ? .10 : 0.0);
 	}
 	public void stop() {
 		liftMotor.set(0.0);

@@ -4,7 +4,7 @@ import org.usfirst.frc.team1884.robot.commands.DriveShiftHighSpeed;
 import org.usfirst.frc.team1884.robot.commands.DriveShiftLowSpeed;
 import org.usfirst.frc.team1884.robot.commands.GearManClose;
 import org.usfirst.frc.team1884.robot.commands.GearManOpen;
-import org.usfirst.frc.team1884.robot.commands.IntakeDownMore;
+import org.usfirst.frc.team1884.robot.commands.IntakeDown;
 import org.usfirst.frc.team1884.robot.commands.IntakeRollIn;
 import org.usfirst.frc.team1884.robot.commands.IntakeRollOut;
 import org.usfirst.frc.team1884.robot.commands.IntakeUp;
@@ -78,7 +78,7 @@ public class OI {
 		operatorController.x.whenPressed(new GearManOpen());
 		operatorController.y.whenPressed(new GearManClose());
 		operatorController.r_stick.whenPressed(new IntakeUp());
-		operatorController.l_stick.whenPressed(new IntakeDownMore());
+		operatorController.l_stick.whenPressed(new IntakeDown());
 	}
 	
 	public XBoxController getDriverController() {
